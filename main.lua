@@ -8,6 +8,7 @@ local world, enemy, snake, food
 local speed = 200
 local angularVelocity = 0
 
+local cState = require "core/state"
 local cLoader = require "core/loader"
 local sEatFood = require "systems/eatFood"
 local sMoveEnemy = require "systems/moveEnemy"
