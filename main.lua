@@ -4,46 +4,39 @@ local graphics = love.graphics
 local physics = love.physics
 
 -- local vars
-local enemy, world, foodAsset, box
-local snake = {}
-local food = {}
-local dx = 0
-local dy = 0
-local world
+local world, enemy, snake, food
 local speed = 200
 local angularVelocity = 0
-local snakePath = {}
-local snakeBody = {}
 
+local cLoader = require "core/loader"
 local eating = require "systems/eating"
+local sEnemyMovement = require "systems/enemyMovement"
+local sPlayerMovement = require "systems/playerMovement"
+local sDrawPlayer = require "systems/drawPlayer"
+local sDrawSprite = require "systems/drawSprite"
+local eEnemy = require "entities/enemy"
+local ePlayer = require "entities/player"
+local eFood = require "entities/food"
 
 function love.load()
-  -- assets
-  box = graphics.newImage('assets/box.png')
-  foodAsset = graphics.newImage('assets/box.png')
-  enemy = graphics.newImage('assets/enemy.png')
+  -- assets loading
+  cLoader.load("box", "assets/box.png")
+  cLoader.load("food", "assets/box.png")
+  cLoader.load("enemy", "assets/enemy.png")
 
-  -- physics
-  love.physics.setMeter(64)
+  -- physics init
+  physics.setMeter(64)
   world = physics.newWorld(0, 9.8, false)
   world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
-  snake.body = physics.newBody(world, dx, dy, "dynamic")
-  snake.shape = physics.newRectangleShape(32, 32)
-  snake.fixture = love.physics.newFixture(snake.body, snake.shape, 1)
-  snake.path = {}
+  -- init snake
+  snake = ePlayer.new():init(world)
 
-  food.body = physics.newBody(world, 80, 80, "static")
-  food.shape = physics.newRectangleShape(32, 32)
-  food.fixture = love.physics.newFixture(food.body, food.shape, 1)
-  food.fixture:setUserData(food)
+  -- init enemy
+  enemy = eEnemy.new():init(world)
 
-  addBody()
-  addBody()
-  addBody()
-  addBody()
-  --snake.shape = physics.newRectangleShape(32, 32)
-  --snake.fixture = physics.newFixture(snake.body, snake.shape)
+  -- init food
+  food = eFood.new():init(world)
 end
 
 function preSolve(a, b)
@@ -54,64 +47,17 @@ end
 function love.update(dt)
   world:update(dt)
 
-  angularVelocity = 0
-  if love.keyboard.isDown("right") then
-    angularVelocity = 200
-  end
-
-  if love.keyboard.isDown("left") then
-    angularVelocity = -200
-  end
-
-  local angle = snake.body:getAngle();
-  snake.body:setAngularVelocity(angularVelocity * dt)
-  snake.body:setLinearVelocity(math.cos(angle) * speed, math.sin(angle) * speed)
-
-
-  if (table.getn(snake.path) > 0) then
-    table.remove(snake.path)
-    local position = {}
-    position.x = snake.body:getX()
-    position.y = snake.body:getY()
-    table.insert(snake.path, 1, position)
-
-    for i = 1, table.getn(snakeBody) do
-      snakeBody[i].x = snake.path[i * 6].x
-      snakeBody[i].y = snake.path[i * 6].y
-    end
-  end
-
-  deleteFood()
-end
-
-function deleteFood()
-  eating.eat(food)
-  if food.eated then
-    food.eated = false
-    food.body:setPosition(random(500), random(500))
-    addBody()
-  end
+  sPlayerMovement.process(snake, dt)
+  eating.process(food, snake)
+  sEnemyMovement.process(enemy, dt)
 end
 
 function love.draw()
   graphics.print("Current FPS: " .. love.timer.getFPS( ), 10, 10)
 
-  graphics.draw(box, snake.body:getX(), snake.body:getY())
-  graphics.draw(foodAsset, food.body:getX(), food.body:getY())
+  graphics.translate(-snake.head:getX() + 400, - snake.head:getY() + 300)
 
-  for i = 1, table.getn(snakeBody) do
-    graphics.draw(box, snakeBody[i].x, snakeBody[i].y)
-  end
-end
-
-function addBody()
-  local position = {};
-  position.x = snake.body:getX()
-  position.y = snake.body:getY()
-
-  table.insert(snakeBody, position)
-
-  for i = 1, 6 do
-    table.insert(snake.path, position)
-  end
+  sDrawPlayer.process(snake)
+  sDrawSprite.process(food)
+  sDrawSprite.process(enemy)
 end
