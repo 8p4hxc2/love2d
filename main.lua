@@ -9,9 +9,9 @@ local speed = 200
 local angularVelocity = 0
 
 local cLoader = require "core/loader"
-local eating = require "systems/eating"
-local sEnemyMovement = require "systems/enemyMovement"
-local sPlayerMovement = require "systems/playerMovement"
+local sEatFood = require "systems/eatFood"
+local sMoveEnemy = require "systems/moveEnemy"
+local sMovePlayer = require "systems/movePlayer"
 local sDrawPlayer = require "systems/drawPlayer"
 local sDrawSprite = require "systems/drawSprite"
 local eEnemy = require "entities/enemy"
@@ -47,9 +47,9 @@ end
 function love.update(dt)
   world:update(dt)
 
-  sPlayerMovement.process(snake, dt)
-  eating.process(food, snake)
-  sEnemyMovement.process(enemy, dt)
+  sMovePlayer.process(snake, dt)
+  sEatFood.process(food, snake)
+  sMoveEnemy.process(enemy, dt)
 end
 
 function love.draw()
