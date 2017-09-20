@@ -1,22 +1,37 @@
 -- alias
 
 -- vars
+local activeState, paused
 local states = {}
 
 -- add a state
-local add = function(state)
-  if(states.active) then
-    states.active.leave()
+local switch = function(name, params)
+  -- close current state
+  if(activeState) then
+    states[activeState].leave()
   end
 
-  states.active = state
-  state.init()
+  -- keep the name of the new current state
+  activeState = name
+
+  -- reactivate the state or init
+  if(states[name]) then
+    state[name].enter()
+  else
+    states[name] = require("states/" .. name)
+    states[name].init(params)
+    states[name].enter()
+  end
 end
 
--- load an asset
-local load = function(name, path)
-  assets[name] = graphics.newImage(path)
-  return get(name)
+-- update the active state
+local update = function(dt)
+  states[activeState].update(dt)
 end
 
-return {load = load, get = get}
+-- draw the active state
+local draw = function()
+  states[activeState].draw()
+end
+
+return {switch = switch, update = update, draw = draw, pause = pause, play = play}
