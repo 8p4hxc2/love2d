@@ -9,6 +9,7 @@ local init = function(self, world)
   self.fixture = physics.newFixture(self.body, self.shape, 1)
   self.path = {}
   self.texture = "enemy"
+  self.enn = true
 
   return self
 end

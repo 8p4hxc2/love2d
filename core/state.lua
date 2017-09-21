@@ -1,7 +1,7 @@
 -- alias
 
 -- vars
-local activeState, paused
+local activeState
 local states = {}
 
 -- add a state

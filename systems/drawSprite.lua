@@ -6,16 +6,32 @@ local cLoader = require("core/loader")
 
 -- vars
 local entities = {}
-local blueprint = {"sprite", "physic"}
+local blueprint = {"texture", "body"}
+local total = table.getn(blueprint)
 
 -- add entity to this system if the blueprint match
 local register = function(entity)
+  local match = 0
 
+  for key, value in pairs(blueprint) do
+    if entity[value] then
+      match = match + 1
+    end
+  end
+
+  if match == total then
+    entities[#entities + 1] = entity
+  end
+end
+
+local update = function(dt)
 end
 
 -- draw all simple sprites
-local process = function(sprite)
-  graphics.draw(cLoader.get(sprite.texture), sprite.body:getX(), sprite.body:getY())
+local draw = function()
+  for key, entity in pairs(entities) do
+    graphics.draw(cLoader.get(entity.texture), entity.body:getX(), entity.body:getY())
+  end
 end
 
-return {process = process}
+return {update = update, draw = draw, register = register}

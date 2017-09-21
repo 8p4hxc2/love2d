@@ -7,7 +7,6 @@ local keyboard = love.keyboard
 -- core
 local cState = require "core/state"
 local cLoader = require "core/loader"
-local cSystem = require "core/system"
 
 -- local vars
 local world
@@ -23,17 +22,13 @@ function love.load()
 
   -- enter game state
   cState.switch("game", world)
-
-  cSystem.add("drawSprite")
 end
 
 function love.update(dt)
   cState.update(dt)
-  cSystem.update(dt)
 end
 
 function love.draw()
   graphics.print("Current FPS: " .. love.timer.getFPS( ), 10, 10)
-  cSystem.draw()
   cState.draw()
 end
