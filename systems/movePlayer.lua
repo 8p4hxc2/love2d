@@ -38,14 +38,14 @@ local update = function(self, dt)
     entity.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
 
 
-    if (table.getn(entity.path) > 0) then
+    if (#entity.path > 0) then
       table.remove(entity.path)
       local position = {}
       position.x = entity.body:getX()
       position.y = entity.body:getY()
       table.insert(entity.path, 1, position)
 
-      for i = 1, table.getn(entity.tail) do
+      for i = 1, #entity.tail do
         entity.tail[i].x = entity.path[i * 6].x
         entity.tail[i].y = entity.path[i * 6].y
       end
