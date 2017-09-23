@@ -2,7 +2,7 @@
 local graphics = love.graphics
 
 -- require
-local cLoader = require("core/loader")
+local cLoader = require "core/loader"
 
 -- draw the player
 local process = function(player)

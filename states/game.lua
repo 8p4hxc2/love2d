@@ -3,6 +3,9 @@ local random = love.math.random
 local graphics = love.graphics
 local physics = love.physics
 
+-- require core
+local cSystem = require "core/system"
+
 -- require entities
 local eEnemy = require "entities/enemy"
 local ePlayer = require "entities/player"
@@ -15,8 +18,6 @@ local sMovePlayer = require "systems/movePlayer"
 local sDrawPlayer = require "systems/drawPlayer"
 local sDrawSprite = require "systems/drawSprite"
 
--- require core
-local cSystem = require "core/system"
 
 local snake, enemy, food, world
 
@@ -55,7 +56,6 @@ local update = function(dt)
   cSystem.update(dt)
   sMovePlayer.process(snake, dt)
   sEatFood.process(food, snake)
-  --sMoveEnemy.process(enemy, dt)
 end
 
 local draw = function()
@@ -63,8 +63,6 @@ local draw = function()
 
   cSystem.draw()
   sDrawPlayer.process(snake)
-  --sDrawSprite.process(food)
-  --sDrawSprite.process(enemy)
 end
 
 local leave = function()

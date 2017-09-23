@@ -1,5 +1,5 @@
+-- alias
 local random = love.math.random
---local eating = {}
 
 local addBody = function(snake)
   local position = {};

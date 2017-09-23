@@ -5,7 +5,7 @@ local activeState
 local states = {}
 
 -- add a state
-local switch = function(name, params)
+local switch = function(name)
   -- close current state
   if(activeState) then
     states[activeState].leave()
@@ -19,7 +19,7 @@ local switch = function(name, params)
     state[name].enter()
   else
     states[name] = require("states/" .. name)
-    states[name].init(params)
+    states[name].init()
     states[name].enter()
   end
 end
@@ -34,4 +34,10 @@ local draw = function()
   states[activeState].draw()
 end
 
-return {switch = switch, update = update, draw = draw, pause = pause, play = play}
+return {
+  switch = switch,
+  update = update,
+  draw = draw,
+  pause = pause,
+  play = play
+}

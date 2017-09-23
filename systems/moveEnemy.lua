@@ -1,29 +1,21 @@
+-- inheritance
+local system = require "base/system"
+
 -- alias
 local random = love.math.random
 
--- vars
-local entities = {}
-local blueprint = {"enn"}
-local total = table.getn(blueprint)
+-- init the system
+local init = function(self)
+  self.entities = {}
+  self.blueprint = {"enn", "body"}
+  self.total = table.getn(self.blueprint)
 
--- add entity to this system if the blueprint match
-local register = function(entity)
-  local match = 0
-
-  for key, value in pairs(blueprint) do
-    if entity[value] then
-      match = match + 1
-    end
-  end
-
-  if match == total then
-    entities[#entities + 1] = entity
-  end
+  return self
 end
 
 -- move all the enemies
-local update = function(dt)
-  for key, enemy in pairs(entities) do
+local update = function(self, dt)
+  for key, enemy in pairs(self.entities) do
     local move = random(0, 50);
 
     if move < 40 then
@@ -35,7 +27,12 @@ local update = function(dt)
   end
 end
 
-local draw = function()
+-- exposed methods
+local methods = {init = init, update = update}
+
+-- constructor
+local new = function()
+  return setmetatable(methods, {__index = system})
 end
 
-return {update = update, draw = draw, register = register}
+return {new = new}

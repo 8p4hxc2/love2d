@@ -1,4 +1,4 @@
--- library
+-- alias
 local random = love.math.random
 local graphics = love.graphics
 local physics = love.physics
@@ -7,9 +7,6 @@ local keyboard = love.keyboard
 -- core
 local cState = require "core/state"
 local cLoader = require "core/loader"
-
--- local vars
-local world
 
 function love.load()
   -- assets loading
@@ -21,7 +18,7 @@ function love.load()
   physics.setMeter(64)
 
   -- enter game state
-  cState.switch("game", world)
+  cState.switch("game")
 end
 
 function love.update(dt)
