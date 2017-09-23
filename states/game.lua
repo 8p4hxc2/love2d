@@ -1,3 +1,6 @@
+-- inheritance
+local system = require "base/state"
+
 -- alias
 local random = love.math.random
 local graphics = love.graphics
@@ -11,15 +14,7 @@ local eEnemy = require "entities/enemy"
 local ePlayer = require "entities/player"
 local eFood = require "entities/food"
 
--- require systems
-local sEatFood = require "systems/eatFood"
-local sMoveEnemy = require "systems/moveEnemy"
-local sMovePlayer = require "systems/movePlayer"
-local sDrawPlayer = require "systems/drawPlayer"
-local sDrawSprite = require "systems/drawSprite"
-
-
-local snake, enemy, food, world
+local snake, world
 
 local preSolve = function(a, b)
   a:getUserData().eating = true
@@ -30,7 +25,7 @@ end
 local init = function()
   -- systems init
   cSystem.add("drawSprite")
-  --cSystem.add("moveEnemy")
+  cSystem.add("moveEnemy")
   cSystem.add("drawPlayer")
   cSystem.add("movePlayer")
   cSystem.add("eatFood")
@@ -51,11 +46,16 @@ local init = function()
   cSystem.registerEntity(eEnemy.new():init(world))
 
   -- init food
-  food = eFood.new():init(world)
-  cSystem.registerEntity(food)
+  cSystem.registerEntity(eFood.new():init(world))
 end
 
-local enter = function ()
+local destroy = function()
+end
+
+local play = function ()
+end
+
+local pause = function()
 end
 
 local update = function(dt)
@@ -68,9 +68,6 @@ local draw = function()
   graphics.translate(-snake.body:getX() + 400, - snake.body:getY() + 300)
 
   cSystem.draw()
-end
-
-local leave = function()
 end
 
 return {init = init, enter = enter, update = update, draw = draw, leave = leave}
