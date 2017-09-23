@@ -1,24 +1,46 @@
+-- inheritance
+local system = require "base/system"
+
 -- alias
 local random = love.math.random
 
-local addBody = function(snake)
-  local position = {};
-  position.x = snake.head:getX()
-  position.y = snake.head:getY()
+-- require
 
-  table.insert(snake.body, position)
+-- init system
+local init = function(self)
+  self.entities = {}
+  self.blueprint = {}
+  return self
+end
 
-  for i = 1, 6 do
-    table.insert(snake.path, position)
+-- draw the system
+local draw = function(self)
+  for key, entity in pairs(self.entities) do
   end
 end
 
-local process = function(food, snake)
-  if food.eated then
-    food.eated = false
-    food.body:setPosition(random(500), random(500))
-    addBody(snake)
+-- update the system
+local update = function(self, dt)
+  for key, entity in pairs(self.entities) do
+    if entity.eated then
+      entity.eated = false
+      entity.body:setPosition(random(500), random(500))
+    end
   end
 end
 
-return {process = process}
+-- exposed methods
+local methods = {
+  init = init,
+  update = update,
+  draw = draw
+}
+
+-- constructor
+local new = function()
+  local class = setmetatable({}, {__index = methods})
+  setmetatable(methods, {__index = system})
+  return class
+end
+
+return {new = new}

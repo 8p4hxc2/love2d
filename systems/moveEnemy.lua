@@ -4,35 +4,47 @@ local system = require "base/system"
 -- alias
 local random = love.math.random
 
--- init the system
+-- require
+
+-- init system
 local init = function(self)
   self.entities = {}
   self.blueprint = {"enn", "body"}
-  self.total = table.getn(self.blueprint)
-
   return self
 end
 
--- move all the enemies
+-- draw the system
+local draw = function(self)
+  for key, entity in pairs(self.entities) do
+  end
+end
+
+-- update the system
 local update = function(self, dt)
-  for key, enemy in pairs(self.entities) do
+  for key, entity in pairs(self.entities) do
     local move = random(0, 50);
 
     if move < 40 then
-      enemy.body:setAngularVelocity(random(200) * dt)
+      entity.body:setAngularVelocity(random(200) * dt)
     end
 
-    local angle = enemy.body:getAngle();
-    enemy.body:setLinearVelocity(math.cos(angle) * 100, math.sin(angle) * 100)
+    local angle = entity.body:getAngle();
+    entity.body:setLinearVelocity(math.cos(angle) * 100, math.sin(angle) * 100)
   end
 end
 
 -- exposed methods
-local methods = {init = init, update = update}
+local methods = {
+  init = init,
+  update = update,
+  draw = draw
+}
 
 -- constructor
 local new = function()
-  return setmetatable(methods, {__index = system})
+  local class = setmetatable({}, {__index = methods})
+  setmetatable(methods, {__index = system})
+  return class
 end
 
 return {new = new}

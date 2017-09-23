@@ -11,8 +11,6 @@ local cLoader = require "core/loader"
 local init = function(self)
   self.entities = {}
   self.blueprint = {"texture", "body"}
-  self.total = table.getn(self.blueprint)
-
   return self
 end
 
@@ -32,7 +30,8 @@ local methods = {
 -- constructor
 local new = function()
   local class = setmetatable({}, {__index = methods})
-  return setmetatable(methods, {__index = system})
+  setmetatable(methods, {__index = system})
+  return class
 end
 
 return {new = new}

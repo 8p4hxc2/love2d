@@ -1,9 +1,27 @@
+-- inheritance
+local system = require "base/system"
+
 -- alias
 local random = love.math.random
 local keyboard = love.keyboard
 
--- move the player
-local process = function(player, dt)
+-- require
+
+-- init system
+local init = function(self)
+  self.entities = {}
+  self.blueprint = {"tail"}
+  return self
+end
+
+-- draw the system
+local draw = function(self)
+  for key, entity in pairs(self.entities) do
+  end
+end
+
+-- update the system
+local update = function(self, dt)
   local angularVelocity = 0
 
   if keyboard.isDown("right") then
@@ -14,23 +32,39 @@ local process = function(player, dt)
     angularVelocity = -200
   end
 
-  local angle = player.head:getAngle();
-  player.head:setAngularVelocity(angularVelocity * dt)
-  player.head:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
+  for key, entity in pairs(self.entities) do
+    local angle = entity.body:getAngle();
+    entity.body:setAngularVelocity(angularVelocity * dt)
+    entity.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
 
 
-  if (table.getn(player.path) > 0) then
-    table.remove(player.path)
-    local position = {}
-    position.x = player.head:getX()
-    position.y = player.head:getY()
-    table.insert(player.path, 1, position)
+    if (table.getn(entity.path) > 0) then
+      table.remove(entity.path)
+      local position = {}
+      position.x = entity.body:getX()
+      position.y = entity.body:getY()
+      table.insert(entity.path, 1, position)
 
-    for i = 1, table.getn(player.body) do
-      player.body[i].x = player.path[i * 6].x
-      player.body[i].y = player.path[i * 6].y
+      for i = 1, table.getn(entity.tail) do
+        entity.tail[i].x = entity.path[i * 6].x
+        entity.tail[i].y = entity.path[i * 6].y
+      end
     end
   end
 end
 
-return {process = process}
+-- exposed methods
+local methods = {
+  init = init,
+  update = update,
+  draw = draw
+}
+
+-- constructor
+local new = function()
+  local class = setmetatable({}, {__index = methods})
+  setmetatable(methods, {__index = system})
+  return class
+end
+
+return {new = new}
