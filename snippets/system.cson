@@ -1,0 +1,45 @@
+'.source.lua':
+  'system':
+    'prefix': 'system'
+    'body': '-- inheritance\n
+    local system = require "base/system"\n
+\n
+    -- alias\n
+\n
+    -- require\n
+\n
+    -- init system\n
+    local init = function(self)\n
+      self.entities = {}\n
+      self.blueprint = {}\n
+      return self\n
+    end\n
+\n
+    -- draw the system\n
+    local draw = function(self)\n
+      for key, entity in pairs(self.entities) do\n
+      end\n
+    end\n
+\n
+    -- update the system\n
+    local update = function(self, dt)\n
+      for key, entity in pairs(self.entities) do\n
+      end\n
+    end\n
+\n
+    -- exposed methods\n
+    local methods = {\n
+      init = init,\n
+      update = update,\n
+      draw = draw\n
+    }\n
+\n
+    -- constructor\n
+    local new = function()\n
+      local class = setmetatable({}, {__index = methods})\n
+      setmetatable(methods, {__index = system})\n
+      return class\n
+    end\n
+\n
+    return {new = new}\n
+'

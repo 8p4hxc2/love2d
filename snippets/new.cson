@@ -1,0 +1,11 @@
+'.source.lua':
+  'new class':
+    'prefix': 'new'
+    'body': '-- constructor\n
+    local new = function()\n
+      local class = setmetatable({}, {__index = methods})\n
+      setmetatable(methods, {__index = system})\n
+      return class\n
+    end\n
+\n
+    return {new = new}\n'
