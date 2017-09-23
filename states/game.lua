@@ -22,6 +22,7 @@ local sDrawSprite = require "systems/drawSprite"
 local snake, enemy, food, world
 
 local preSolve = function(a, b)
+  a:getUserData().eating = true
   b:getUserData().eated = true
   --b:destroy()
 end
@@ -29,7 +30,11 @@ end
 local init = function()
   -- systems init
   cSystem.add("drawSprite")
-  cSystem.add("moveEnemy")
+  --cSystem.add("moveEnemy")
+  cSystem.add("drawPlayer")
+  cSystem.add("movePlayer")
+  cSystem.add("eatFood")
+  cSystem.add("eatPlayer")
 
   -- physics init
   world = physics.newWorld(0, 9.8, false)
@@ -37,6 +42,9 @@ local init = function()
 
   -- init snake
   snake = ePlayer.new():init(world)
+  cSystem.registerEntity(snake)
+
+  cSystem.registerEntity(ePlayer.new():init(world, 200, 0))
 
   -- init enemy
   --enemy = eEnemy.new():init(world)
@@ -54,15 +62,12 @@ local update = function(dt)
   world:update(dt)
 
   cSystem.update(dt)
-  sMovePlayer.process(snake, dt)
-  sEatFood.process(food, snake)
 end
 
 local draw = function()
-  graphics.translate(-snake.head:getX() + 400, - snake.head:getY() + 300)
+  graphics.translate(-snake.body:getX() + 400, - snake.body:getY() + 300)
 
   cSystem.draw()
-  sDrawPlayer.process(snake)
 end
 
 local leave = function()
