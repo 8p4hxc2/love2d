@@ -5,9 +5,11 @@ local system = require "base/state"
 local random = love.math.random
 local graphics = love.graphics
 local physics = love.physics
+local keyboard = love.keyboard
 
 -- require core
 local cSystem = require "core/system"
+local cState = require "core/state"
 
 -- require entities
 local eEnemy = require "entities/enemy"
@@ -42,7 +44,6 @@ local init = function()
   cSystem.registerEntity(ePlayer.new():init(world, 200, 0))
 
   -- init enemy
-  --enemy = eEnemy.new():init(world)
   cSystem.registerEntity(eEnemy.new():init(world))
 
   -- init food
@@ -60,14 +61,18 @@ end
 
 local update = function(dt)
   world:update(dt)
-
   cSystem.update(dt)
+
+  if keyboard.isDown("space") then
+    cState.add("pause")
+  end
 end
 
 local draw = function()
+  graphics.push()
   graphics.translate(-snake.body:getX() + 400, - snake.body:getY() + 300)
-
   cSystem.draw()
+  graphics.pop()
 end
 
-return {init = init, enter = enter, update = update, draw = draw, leave = leave}
+return {init = init, play = play, update = update, draw = draw, pause = pause, destroy = destroy}
