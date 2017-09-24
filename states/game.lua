@@ -1,5 +1,5 @@
 -- inheritance
-local system = require "base/state"
+local state = require "base/state"
 
 -- alias
 local random = love.math.random
@@ -16,16 +16,22 @@ local eEnemy = require "entities/enemy"
 local ePlayer = require "entities/player"
 local eFood = require "entities/food"
 
-local snake, world
+local world
+
+local handleKey = function()
+  if keyboard.isDown("space") then
+    cState.add("pause")
+  end
+end
 
 local preSolve = function(a, b)
   a:getUserData().eating = true
   b:getUserData().eated = true
-  --b:destroy()
 end
 
 local init = function()
   -- systems init
+  cSystem.add("camera")
   cSystem.add("drawSprite")
   cSystem.add("moveEnemy")
   cSystem.add("drawPlayer")
@@ -38,10 +44,9 @@ local init = function()
   world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
   -- init snake
-  snake = ePlayer.new():init(world)
-  cSystem.registerEntity(snake)
+  cSystem.registerEntity(ePlayer.new():init(world))
 
-  cSystem.registerEntity(ePlayer.new():init(world, 200, 0))
+  --cSystem.registerEntity(ePlayer.new():init(world, 200, 0))
 
   -- init enemy
   cSystem.registerEntity(eEnemy.new():init(world))
@@ -62,15 +67,11 @@ end
 local update = function(dt)
   world:update(dt)
   cSystem.update(dt)
-
-  if keyboard.isDown("space") then
-    cState.add("pause")
-  end
+  handleKey()
 end
 
 local draw = function()
   graphics.push()
-  graphics.translate(-snake.body:getX() + 400, - snake.body:getY() + 300)
   cSystem.draw()
   graphics.pop()
 end
