@@ -3,6 +3,7 @@ local random = love.math.random
 local graphics = love.graphics
 local physics = love.physics
 local keyboard = love.keyboard
+local timer = love.timer
 
 -- core
 local cState = require "core/state"
@@ -13,6 +14,7 @@ function love.load()
   cLoader.load("box", "assets/box.png")
   cLoader.load("food", "assets/box.png")
   cLoader.load("enemy", "assets/enemy.png")
+  cLoader.load("background", "assets/background.png")
 
   -- global physics
   physics.setMeter(64)
@@ -26,6 +28,7 @@ function love.update(dt)
 end
 
 function love.draw()
-  graphics.print("Current FPS: " .. love.timer.getFPS( ), 10, 10)
+  --love.graphics.setColor(0, 0, 0, 255)
   cState.draw()
+  graphics.print("Current FPS: " .. timer.getFPS( ), 10, 10)
 end
