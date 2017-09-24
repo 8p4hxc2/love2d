@@ -2,6 +2,9 @@
 local physics = love.physics
 local random = love.math.random
 
+-- require
+local cClass = require "core/class"
+
 -- init enemy
 local init = function(self, world)
   self.body = physics.newBody(world, random(500), random(500), "dynamic")
@@ -21,7 +24,7 @@ local methods = {
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = methods})
+  return cClass.new(methods)
 end
 
 return {new = new}

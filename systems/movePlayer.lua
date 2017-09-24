@@ -6,6 +6,7 @@ local random = love.math.random
 local keyboard = love.keyboard
 
 -- require
+local cClass = require "core/class"
 
 -- init system
 local init = function(self)
@@ -62,9 +63,7 @@ local methods = {
 
 -- constructor
 local new = function()
-  local class = setmetatable({}, {__index = methods})
-  setmetatable(methods, {__index = system})
-  return class
+  return cClass.inherit(methods, system)
 end
 
 return {new = new}

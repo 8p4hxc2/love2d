@@ -1,6 +1,9 @@
 -- alias
 local physics = love.physics
 
+-- require
+local cClass = require "core/class"
+
 -- init food
 local init = function(self, world)
   self.body = physics.newBody(world, 200, 200, "static")
@@ -19,7 +22,7 @@ local methods = {
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = methods})
+  return cClass.new(methods)
 end
 
 return {new = new}

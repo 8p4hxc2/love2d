@@ -1,6 +1,9 @@
 -- alias
 local physics = love.physics
 
+-- require
+local cClass = require "core/class"
+
 -- init player
 local init = function(self, world, x, y)
   self.body = physics.newBody(world, x or 0, y or 0, "dynamic")
@@ -22,7 +25,7 @@ local methods = {
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = methods})
+  return cClass.new(methods)
 end
 
 return {new = new}
