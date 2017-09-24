@@ -2,26 +2,55 @@
 
 -- vars
 local activeState
+local activesStates = {}
 local states = {}
+local history = {}
 
 -- add a state
 local switch = function(name)
   -- close current state
   if(activeState) then
-    states[activeState].leave()
+    states[activeState].destroy()
+    table.remove(activesStates)
+    states[activeState] = nil
   end
 
   -- keep the name of the new current state
   activeState = name
-
+  activesStates[#activesStates + 1] = name
   -- reactivate the state or init
-  if(states[name]) then
-    state[name].enter()
-  else
-    states[name] = require("states/" .. name)
-    states[name].init()
-    states[name].enter()
+  states[name] = require("states/" .. name)
+  states[name].init()
+  states[name].play()
+end
+
+local add = function(name)
+  -- pause current state
+  if(activeState) then
+    states[activeState].pause()
   end
+
+  -- keep the name of the new current state
+  activeState = name
+  activesStates[#activesStates + 1] = name
+
+  -- create the new state
+  states[name] = require("states/" .. name)
+  states[name].init()
+  states[name].play()
+end
+
+local back = function()
+  -- pause current state
+  states[activeState].destroy()
+
+  states[activeState] = nil
+  table.remove(activesStates)
+
+  activeState = activesStates[#activesStates]
+
+  -- create the new state
+  states[activeState].play()
 end
 
 -- update the active state
@@ -31,7 +60,9 @@ end
 
 -- draw the active state
 local draw = function()
-  states[activeState].draw()
+  for key, state in pairs(activesStates) do
+    states[state].draw()
+  end
 end
 
 return {
@@ -39,5 +70,7 @@ return {
   update = update,
   draw = draw,
   pause = pause,
-  play = play
+  play = play,
+  add = add,
+  back = back
 }
