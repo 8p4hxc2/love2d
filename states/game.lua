@@ -15,6 +15,7 @@ local cState = require "core/state"
 local eEnemy = require "entities/enemy"
 local ePlayer = require "entities/player"
 local eFood = require "entities/food"
+local eBackground = require "entities/background"
 
 local world
 
@@ -32,6 +33,7 @@ end
 local init = function()
   -- systems init
   cSystem.add("camera")
+  cSystem.add("drawStaticSprite")
   cSystem.add("drawSprite")
   cSystem.add("moveEnemy")
   cSystem.add("drawPlayer")
@@ -46,13 +48,14 @@ local init = function()
   -- init snake
   cSystem.registerEntity(ePlayer.new():init(world))
 
-  --cSystem.registerEntity(ePlayer.new():init(world, 200, 0))
-
   -- init enemy
   cSystem.registerEntity(eEnemy.new():init(world))
 
   -- init food
   cSystem.registerEntity(eFood.new():init(world))
+
+  -- init background
+  cSystem.registerEntity(eBackground.new():init(world))
 end
 
 local destroy = function()
