@@ -7,6 +7,7 @@
     -- alias\n
 \n
     -- require\n
+    local cClass = require "core/class"\n
 \n
     -- init system\n
     local init = function(self)\n
@@ -36,9 +37,7 @@
 \n
     -- constructor\n
     local new = function()\n
-      local class = setmetatable({}, {__index = methods})\n
-      setmetatable(methods, {__index = system})\n
-      return class\n
+      return cClass.inherit(methods, system)\n
     end\n
 \n
     return {new = new}\n
