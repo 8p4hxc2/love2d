@@ -6,10 +6,12 @@ local random = love.math.random
 local graphics = love.graphics
 local physics = love.physics
 local keyboard = love.keyboard
+local audio = love.audio
 
 -- require core
 local cSystem = require "core/system"
 local cState = require "core/state"
+local cLoader = require "core/loader"
 
 -- require entities
 local eEnemy = require "entities/enemy"
@@ -62,9 +64,11 @@ local destroy = function()
 end
 
 local play = function ()
+  love.audio.play(cLoader.get("music"))
 end
 
 local pause = function()
+  love.audio.pause()
 end
 
 local update = function(dt)
