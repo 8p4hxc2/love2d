@@ -6,8 +6,8 @@ local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, world)
-  self.position = {x = -600, y = -600}
-  self.texture = "background"
+  self.position = {x = 0, y = 0}
+  self.texture = "castle"
 
   return self
 end
