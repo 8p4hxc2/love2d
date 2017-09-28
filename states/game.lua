@@ -9,8 +9,9 @@ local keyboard = love.keyboard
 local audio = love.audio
 
 -- require core
-local cSystem = require "core/system"
+local cSystem = require("core/system")
 local cState = require "core/state"
+local cClass = require "core/class"
 local cLoader = require "core/loader"
 
 -- require entities
@@ -23,64 +24,81 @@ local world
 
 local handleKey = function()
   if keyboard.isDown("space") then
-    cState.add("pause")
+    cState.add("pause", true)
   end
 end
 
 local preSolve = function(a, b)
-  a:getUserData().eating = true
-  b:getUserData().eated = true
+  --a:getUserData().eating = true
+  --b:getUserData().eated = true
 end
 
-local init = function()
+local init = function(self)
+  self.systems = cSystem.new():init()
+
   -- systems init
-  cSystem.add("camera")
-  cSystem.add("drawStaticSprite")
-  cSystem.add("drawSprite")
-  cSystem.add("moveEnemy")
-  cSystem.add("drawPlayer")
-  cSystem.add("movePlayer")
-  cSystem.add("eatFood")
-  cSystem.add("eatPlayer")
+  self.systems:add("camera")
+  self.systems:add("drawStaticSprite")
+  self.systems:add("drawSprite")
+  self.systems:add("moveEnemy")
+  self.systems:add("drawPlayer")
+  self.systems:add("movePlayer")
+  self.systems:add("eatFood")
+  self.systems:add("eatPlayer")
 
   -- physics init
-  world = physics.newWorld(0, 9.8, false)
-  world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+  self.world = physics.newWorld(0, 9.8, false)
+  self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
   -- init snake
-  cSystem.registerEntity(ePlayer.new():init(world))
+  self.systems:registerEntity(ePlayer.new():init(self.world))
 
   -- init enemy
-  cSystem.registerEntity(eEnemy.new():init(world))
+  self.systems:registerEntity(eEnemy.new():init(self.world))
 
   -- init food
-  cSystem.registerEntity(eFood.new():init(world))
+  self.systems:registerEntity(eFood.new():init(self.world))
 
   -- init background
-  cSystem.registerEntity(eBackground.new():init(world))
+  --cSystem.registerEntity(eBackground.new():init(world))
 end
 
-local destroy = function()
+local destroy = function(self)
 end
 
-local play = function ()
+local play = function (self)
   love.audio.play(cLoader.get("music"))
 end
 
-local pause = function()
+local pause = function(self)
   love.audio.pause()
 end
 
-local update = function(dt)
-  world:update(dt)
-  cSystem.update(dt)
+local update = function(self,dt)
+  self.world:update(dt)
+  self.systems:update(dt)
   handleKey()
 end
 
-local draw = function()
-  graphics.push()
-  cSystem.draw()
-  graphics.pop()
+local draw = function(self)
+  --graphics.push()
+  self.systems:draw()
+  --graphics.pop()
 end
 
-return {init = init, play = play, update = update, draw = draw, pause = pause, destroy = destroy}
+-- exposed methods
+local methods = {
+  init = init,
+  play = play,
+  update = update,
+  draw = draw,
+  pause = pause,
+  destroy = destroy
+}
+
+-- constructor
+local new = function()
+  return cClass.inherit(methods, state)
+end
+
+return {new = new}
