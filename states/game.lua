@@ -51,13 +51,13 @@ local init = function(self)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
   -- init snake
-  self.systems:registerEntity(ePlayer.new():init(self.world))
+  self.systems:registerEntity("player", self.world)
 
   -- init enemy
-  self.systems:registerEntity(eEnemy.new():init(self.world))
+  self.systems:registerEntity("enemy", self.world)
 
   -- init food
-  self.systems:registerEntity(eFood.new():init(self.world))
+  self.systems:registerEntity("food", self.world)
 
   -- init background
   --cSystem.registerEntity(eBackground.new():init(world))
@@ -67,17 +67,21 @@ local destroy = function(self)
 end
 
 local play = function (self)
+  self.paused = false
   love.audio.play(cLoader.get("music"))
 end
 
 local pause = function(self)
+  self.paused = true
   love.audio.pause()
 end
 
-local update = function(self,dt)
-  self.world:update(dt)
-  self.systems:update(dt)
-  handleKey()
+local update = function(self, dt)
+  if(not self.paused) then
+    self.world:update(dt)
+    self.systems:update(dt)
+    handleKey()
+  end
 end
 
 local draw = function(self)
