@@ -2,40 +2,58 @@
 local graphics = love.graphics
 local keyboard = love.keyboard
 
+-- inheritance
+local state = require "base/state"
+
 -- require core
-local cState = require "core/state"
+local cSystem = require("core/system")
+local cClass = require("core/class")
 
--- vars
-local str = "BEGIN"
 
-local init = function()
+-- called one time at the creation of the state
+local init = function(self)
+  self.systems = cSystem.new():init()
 end
 
-local destroy = function()
+-- called one time at the destruction of the state
+local destroy = function(self)
 end
 
-local play = function ()
+-- called when activating the state
+local play = function (self)
+  self.paused = false
 end
 
-local pause = function()
+-- called when leaving the state
+local pause = function(self)
+  self.paused = true
 end
 
-local update = function(dt)
-  if keyboard.isDown("escape") then
-    cState.back()
+-- called everyframe to update the state
+local update = function(self, dt)
+  if(not self.paused) then
+    self.systems:update(dt)
   end
-
-  if keyboard.isDown("up") then
-    str = "up"
-  end
-
-  if keyboard.isDown("down") then
-    str = "down"
-  end
 end
 
-local draw = function()
-  graphics.print(str, 100, 100)
+-- called everyframe to draw the state
+local draw = function(self)
+  self.systems:draw()
 end
 
-return {init = init, play = play, update = update, draw = draw, pause = pause, destroy = destroy}
+-- exposed methods
+local methods = {
+  init = init,
+  play = play,
+  update = update,
+  draw = draw,
+  pause = pause,
+  destroy = destroy
+}
+
+-- constructor
+local new = function()
+  return cClass.inherit(methods, state)
+end
+
+return {new = new}
