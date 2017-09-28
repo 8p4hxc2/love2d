@@ -51,8 +51,10 @@ local back = function()
 
   activeState = activesStates[#activesStates]
 
-  -- create the new state
-  states[activeState]:play()
+  -- play all activeState
+  for key, state in pairs(activesStates) do
+    states[state]:play()
+  end
 end
 
 -- update the active state
