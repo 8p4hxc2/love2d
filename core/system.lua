@@ -30,10 +30,14 @@ local draw = function(self)
 end
 
 -- register an entity in all the systems
-local registerEntity = function(self, entity, params)
+local registerEntity = function(self, name, params)
+  local entity = require("entities/" .. name).new():init(params)
+
   for key, system in pairs(self.systems) do
     system:register(entity)
   end
+
+  return entity
 end
 
 -- exposed methods
