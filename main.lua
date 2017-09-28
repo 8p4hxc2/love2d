@@ -18,6 +18,8 @@ function love.load()
 
   -- enter game state
   cState.switch("game")
+
+  -- add ui state
   cState.add("ui")
 end
 
