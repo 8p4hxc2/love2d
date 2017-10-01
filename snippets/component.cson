@@ -1,0 +1,22 @@
+'.source.lua':
+  'new component':
+    'prefix': 'component'
+    'body': '-- init the component\n
+    local init = function(self, config)\n
+      config = config or {}\n
+\n
+      -- define the properties of the component\n
+      --self.position = config.position or {x = 0, y = 0}\n
+\n
+      return self\n
+    end\n
+\n
+    -- expose the component\n
+    local canDraw = {init = init}\n
+\n
+    -- constructor\n
+    local new = function()\n
+      return setmetatable({}, {__index = canDraw})\n
+    end\n
+\n
+    return {new = new}\n'

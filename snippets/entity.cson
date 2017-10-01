@@ -1,0 +1,31 @@
+'.source.lua':
+  'new entity':
+    'prefix': 'entity'
+    'body': '-- inheritance\n
+    local entity = require "base/entity"\n
+\n
+    -- alias\n
+\n
+    -- require\n
+    local cClass = require "core/class"\n
+\n
+    -- init enemy\n
+    local init = function(self, config)\n
+      -- adding components\n
+      -- self:add("canPress")\n
+      return self\n
+    end\n
+\n
+    -- exposed methods\n
+    local methods = {\n
+      init = init\n
+    }\n
+\n
+    -- constructor\n
+    local new = function()\n
+      local class = setmetatable({}, {__index = methods})\n
+      setmetatable(methods, {__index = entity})\n
+      return class\n
+    end\n
+\n
+    return {new = new}\n'
