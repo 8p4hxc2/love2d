@@ -34,16 +34,16 @@ local update = function(self, dt)
   end
 
   for key, entity in pairs(self.entities) do
-    local angle = entity.body:getAngle();
-    entity.body:setAngularVelocity(angularVelocity * dt)
-    entity.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
+    local angle = entity.canPhysic.body:getAngle();
+    entity.canPhysic.body:setAngularVelocity(angularVelocity * dt)
+    entity.canPhysic.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
 
 
     if (#entity.path > 0) then
       table.remove(entity.path)
       local position = {}
-      position.x = entity.body:getX()
-      position.y = entity.body:getY()
+      position.x = entity.canPhysic.body:getX()
+      position.y = entity.canPhysic.body:getY()
       table.insert(entity.path, 1, position)
 
       for i = 1, #entity.tail do
@@ -51,6 +51,9 @@ local update = function(self, dt)
         entity.tail[i].y = entity.path[i * 6].y
       end
     end
+
+    entity.canDraw.position.x = entity.canPhysic.body:getX()
+    entity.canDraw.position.y = entity.canPhysic.body:getY()
   end
 end
 

@@ -10,7 +10,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"enn", "body"}
+  self.blueprint = {"canDraw", "canPhysic", "enn"}
   return self
 end
 
@@ -26,11 +26,14 @@ local update = function(self, dt)
     local move = random(0, 50);
 
     if move < 40 then
-      entity.body:setAngularVelocity(random(200) * dt)
+      entity.canPhysic.body:setAngularVelocity(random(200) * dt)
     end
 
-    local angle = entity.body:getAngle();
-    entity.body:setLinearVelocity(math.cos(angle) * 100, math.sin(angle) * 100)
+    local angle = entity.canPhysic.body:getAngle();
+    entity.canPhysic.body:setLinearVelocity(math.cos(angle) * 100, math.sin(angle) * 100)
+
+    entity.canDraw.position.x = entity.canPhysic.body:getX()
+    entity.canDraw.position.y = entity.canPhysic.body:getY()
   end
 end
 
