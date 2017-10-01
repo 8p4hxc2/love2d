@@ -38,7 +38,6 @@ local init = function(self)
 
   -- systems init
   self.systems:add("camera")
-  self.systems:add("drawStaticSprite")
   self.systems:add("drawSprite")
   self.systems:add("moveEnemy")
   self.systems:add("drawPlayer")
@@ -54,13 +53,10 @@ local init = function(self)
   self.systems:registerEntity("player", self.world)
 
   -- init enemy
-  self.systems:registerEntity("enemy", self.world)
+  --self.systems:registerEntity("enemy", self.world)
 
   -- init food
   self.systems:registerEntity("food", self.world)
-
-  -- init background
-  --cSystem.registerEntity(eBackground.new():init(world))
 end
 
 local destroy = function(self)
@@ -68,12 +64,12 @@ end
 
 local play = function (self)
   self.paused = false
-  love.audio.play(cLoader.get("music"))
+  --love.audio.play(cLoader.get("music"))
 end
 
 local pause = function(self)
   self.paused = true
-  love.audio.pause()
+  --love.audio.pause()
 end
 
 local update = function(self, dt)
