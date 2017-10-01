@@ -1,19 +1,22 @@
+-- inheritance
+local entity = require "base/entity"
+
 -- alias
 local physics = love.physics
 
 -- require
 local cClass = require "core/class"
 
--- init player
-local init = function(self, world, x, y)
-  self.body = physics.newBody(world, x or 0, y or 0, "dynamic")
-  self.shape = physics.newRectangleShape(32, 32)
-  self.fixture = physics.newFixture(self.body, self.shape, 1)
+-- init enemy
+local init = function(self, config)
   self.path = {}
   self.tail = {}
-  self.texture = "box"
 
-  self.fixture:setUserData(self)
+  self.position = {x = 0, y = 0}
+  self.size = {width = 32, height = 32}
+
+  self:add("canDraw", {position = self.position, texture = "box"})
+  self:add("canPhysic", {world = config, position = self.position, size = self.size, userData = self})
 
   return self
 end
@@ -25,7 +28,9 @@ local methods = {
 
 -- constructor
 local new = function()
-  return cClass.new(methods)
+  local class = setmetatable({}, {__index = methods})
+  setmetatable(methods, {__index = entity})
+  return class
 end
 
 return {new = new}

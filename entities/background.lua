@@ -1,13 +1,15 @@
+-- inheritance
+local entity = require "base/entity"
+
 -- alias
-local physics = love.physics
 
 -- require
 local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, world)
-  self.position = {x = 0, y = 0}
-  self.texture = "castle"
+  self:add("canPress")
+  self:add("canDraw", {position = {x = 0, y = 0}, texture = "castle"})
 
   return self
 end
@@ -19,7 +21,9 @@ local methods = {
 
 -- constructor
 local new = function()
-  return cClass.new(methods)
+  local class = setmetatable({}, {__index = methods})
+  setmetatable(methods, {__index = entity})
+  return class
 end
 
 return {new = new}
