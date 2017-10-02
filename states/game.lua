@@ -29,8 +29,8 @@ local handleKey = function()
 end
 
 local preSolve = function(a, b)
-  --a:getUserData().eating = true
-  --b:getUserData().eated = true
+  a:getUserData().eating = true
+  b:getUserData().eated = true
 end
 
 local init = function(self)
