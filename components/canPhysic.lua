@@ -10,10 +10,10 @@ local init = function(self, config)
     error("missing world for physic component")
   end
 
-  self.body = physics.newBody(config.world, config.position.x or 0, config.position.y or 0, config.type or "dynamic")
+  self.body = physics.newBody(config.world, config.transform.x or 0, config.transform.y or 0, config.type or "dynamic")
 
-  if(config.size) then
-    self.shape = physics.newRectangleShape(config.size.width, config.size.height)
+  if(config.transform.width) then
+    self.shape = physics.newRectangleShape(config.transform.width, config.transform.height)
     self.fixture = physics.newFixture(self.body, self.shape, 1)
   end
 

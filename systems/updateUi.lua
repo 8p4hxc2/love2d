@@ -30,11 +30,11 @@ local update = function(self, dt)
       button.canPress.pressed = true
     end
 
-    local isOnButton = button.position.x < x and x < button.position.x + 490 and button.position.y < y and y < button.position.y + 490
+    local isOnButton = button.transform.x < x and x < button.transform.x + 490 and button.transform.y < y and y < button.transform.y + 490
 
     if(not mouse.isDown(1)) then
       if(button.canPress.pressed and button.canPress.alreadyPressed) then
-        button.position.y = button.position.y - 4
+        button.transform.y = button.transform.y - 4
       end
       button.canPress.pressed = false
       button.canPress.alreadyPressed = false
@@ -42,7 +42,7 @@ local update = function(self, dt)
 
     if(button.canPress.pressed and not button.canPress.alreadyPressed and isOnButton) then
       button.canPress.alreadyPressed = true
-      button.position.y = button.position.y + 4
+      button.transform.y = button.transform.y + 4
       button.texture = "blue_button12"
     elseif(not pressed) then
       button.texture = "blue_button11"

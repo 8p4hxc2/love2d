@@ -11,11 +11,10 @@ local cClass = require "core/class"
 local init = function(self, config)
   self.enn = true
 
-  self:add("position", {x = 700, y = 50})
-  self:add("size", {width = 32, height = 32})
+  self:add("transform", {x = 700, y = 50, width = 32, height = 32})
   self:add("canPress")
   self:add("canDraw", {position = self.position, texture = "food"})
-  self:add("canPhysic", {world = config, position = self.position, size = self.size, type = "static", userData = self})
+  self:add("canPhysic", {world = config, transform = self.transform, type = "static", userData = self})
 
   return self
 end

@@ -3,6 +3,8 @@ local init = function(self, config)
   config = config or {}
 
   -- define the properties of the component
+  self.x = config.x or 0
+  self.y = config.y or 0
   self.width = config.width or 0
   self.height = config.height or 0
 
@@ -10,11 +12,11 @@ local init = function(self, config)
 end
 
 -- expose the component
-local canDraw = {init = init}
+local transform = {init = init}
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = canDraw})
+  return setmetatable({}, {__index = transform})
 end
 
 return {new = new}
