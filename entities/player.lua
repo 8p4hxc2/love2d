@@ -10,8 +10,8 @@ local cClass = require "core/class"
 -- init enemy
 local init = function(self, config)
   self.path = {}
-  self.tail = {}
 
+  self:add("tail")
   self:add("position", {x = 0, y = 0})
   self:add("size", {width = 32, height = 32})
 
