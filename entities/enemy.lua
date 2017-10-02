@@ -11,11 +11,12 @@ local cClass = require "core/class"
 local init = function(self, config)
   self.enn = true
 
-  self.position = {x = 600, y = 400}
-  self.size = {width = 32, height = 32}
+  self:add("position", {x = 600, y = 400})
+  self:add("size", {width = 32, height = 32})
   self:add("canPress")
   self:add("canDraw", {position = self.position, texture = "enemy"})
   self:add("canPhysic", {world = config, position = self.position, size = self.size})
+
   return self
 end
 

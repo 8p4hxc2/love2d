@@ -10,7 +10,9 @@ local cClass = require "core/class"
 -- init enemy
 local init = function(self, config)
   self:add("canPress")
-  self:add("canDraw", {position = {x = 600, y = 100}, texture = "blue_button11"})
+  self:add("position", {x = 600, y = 100})
+  self:add("canDraw", {texture = "blue_button11"})
+
   return self
 end
 

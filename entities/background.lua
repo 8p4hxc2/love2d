@@ -8,8 +8,9 @@ local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, world)
+  self:add("position", {x = 0, y = 0})
   self:add("canPress")
-  self:add("canDraw", {position = {x = 0, y = 0}, texture = "castle"})
+  self:add("canDraw", {texture = "castle"})
 
   return self
 end

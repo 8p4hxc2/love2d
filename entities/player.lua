@@ -12,8 +12,10 @@ local init = function(self, config)
   self.path = {}
   self.tail = {}
 
-  self.position = {x = 0, y = 0}
-  self.size = {width = 32, height = 32}
+  self:add("position", {x = 0, y = 0})
+  self:add("size", {width = 32, height = 32})
+
+  print(self.position.x)
 
   self:add("canDraw", {position = self.position, texture = "box"})
   self:add("canPhysic", {world = config, position = self.position, size = self.size, userData = self})
