@@ -25,7 +25,7 @@ local update = function(self, dt)
   for key, entity in pairs(self.entities) do
     if entity.eated then
       entity.eated = false
-      entity.body:setPosition(random(500), random(500))
+      entity.canPhysic.body:setPosition(random(500), random(500))
     end
   end
 end

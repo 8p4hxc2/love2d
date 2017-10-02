@@ -25,8 +25,8 @@ local update = function(self, dt)
     if entity.eating then
       entity.eating = false
       local position = {};
-      position.x = entity.body:getX()
-      position.y = entity.body:getY()
+      position.x = entity.canPhysic.body:getX()
+      position.y = entity.canPhysic.body:getY()
 
       table.insert(entity.tail, position)
 
