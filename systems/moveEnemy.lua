@@ -32,8 +32,8 @@ local update = function(self, dt)
     local angle = entity.canPhysic.body:getAngle();
     entity.canPhysic.body:setLinearVelocity(math.cos(angle) * 100, math.sin(angle) * 100)
 
-    entity.canDraw.position.x = entity.canPhysic.body:getX()
-    entity.canDraw.position.y = entity.canPhysic.body:getY()
+    entity.position.x = entity.canPhysic.body:getX()
+    entity.position.y = entity.canPhysic.body:getY()
   end
 end
 

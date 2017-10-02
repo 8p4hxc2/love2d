@@ -52,8 +52,8 @@ local update = function(self, dt)
       end
     end
 
-    entity.canDraw.position.x = entity.canPhysic.body:getX()
-    entity.canDraw.position.y = entity.canPhysic.body:getY()
+    entity.position.x = entity.canPhysic.body:getX()
+    entity.position.y = entity.canPhysic.body:getY()
   end
 end
 
