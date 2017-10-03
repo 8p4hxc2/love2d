@@ -9,8 +9,7 @@ local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, config)
-  self.path = {}
-
+  self:add("path")
   self:add("tail")
   self:add("transform", {x = 0, y = 0, width = 32, height = 32})
   self:add("spriteRenderer", {texture = "box"})
