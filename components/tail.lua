@@ -9,11 +9,11 @@ local init = function(self, config)
 end
 
 -- expose the component
-local canDraw = {init = init}
+local tail = {init = init}
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = canDraw})
+  return setmetatable({}, {__index = tail})
 end
 
 return {new = new}
