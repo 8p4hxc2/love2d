@@ -10,7 +10,7 @@ local cClass = require "core/class"
 local init = function(self, world)
   self:add("transform", {x = 0, y = 0})
   self:add("canPress")
-  self:add("canDraw", {texture = "castle"})
+  self:add("spriteRenderer", {texture = "castle"})
 
   return self
 end

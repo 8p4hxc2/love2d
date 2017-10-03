@@ -14,8 +14,8 @@ local init = function(self, config)
   self:add("tail")
   self:add("transform", {x = 0, y = 0, width = 32, height = 32})
 
-  self:add("canDraw", {position = self.position, texture = "box"})
-  self:add("canPhysic", {world = config, transform = self.transform, userData = self})
+  self:add("spriteRenderer", {position = self.position, texture = "box"})
+  self:add("rigidBody", {world = config, transform = self.transform, userData = self})
 
   return self
 end

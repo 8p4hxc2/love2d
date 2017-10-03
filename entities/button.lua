@@ -11,7 +11,7 @@ local cClass = require "core/class"
 local init = function(self, config)
   self:add("canPress")
   self:add("transform", {x = 600, y = 100})
-  self:add("canDraw", {texture = "blue_button11"})
+  self:add("spriteRenderer", {texture = "blue_button11"})
 
   return self
 end

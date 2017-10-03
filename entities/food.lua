@@ -13,8 +13,8 @@ local init = function(self, config)
 
   self:add("transform", {x = 700, y = 50, width = 32, height = 32})
   self:add("canPress")
-  self:add("canDraw", {position = self.position, texture = "food"})
-  self:add("canPhysic", {world = config, transform = self.transform, type = "static", userData = self})
+  self:add("spriteRenderer", {position = self.position, texture = "food"})
+  self:add("rigidBody", {world = config, transform = self.transform, type = "static", userData = self})
 
   return self
 end
