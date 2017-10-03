@@ -26,6 +26,8 @@ local update = function(self, dt)
     if entity.eated then
       entity.eated = false
       entity.rigidBody.body:setPosition(random(500), random(500))
+      entity.transform.x = entity.rigidBody.body:getX()
+      entity.transform.y = entity.rigidBody.body:getY()
     end
   end
 end
