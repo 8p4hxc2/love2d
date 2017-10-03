@@ -17,11 +17,11 @@ local init = function(self, config)
 end
 
 -- expose the component
-local dynamicBody = {init = init}
+local rigidBody = {init = init}
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = dynamicBody})
+  return setmetatable({}, {__index = rigidBody})
 end
 
 return {new = new}
