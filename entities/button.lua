@@ -9,8 +9,8 @@ local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, config)
-  self:add("canPress")
-  self:add("transform", {x = 600, y = 100})
+  self:add("canPress", {onTexture = "blue_button12"})
+  self:add("transform", {x = 600, y = 100, width = 49, height = 49})
   self:add("spriteRenderer", {texture = "blue_button11"})
 
   return self

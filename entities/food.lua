@@ -9,12 +9,11 @@ local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, config)
-  self.enn = true
-
   self:add("transform", {x = 700, y = 50, width = 32, height = 32})
   self:add("canPress")
-  self:add("spriteRenderer", {position = self.position, texture = "food"})
-  self:add("rigidBody", {world = config, transform = self.transform, type = "static", userData = self})
+  self:add("spriteRenderer", {texture = "food"})
+  self:add("rigidBody", {entity = self, world = config, type = "static"})
+  self:add("rectangleCollision", {entity = self})
 
   return self
 end

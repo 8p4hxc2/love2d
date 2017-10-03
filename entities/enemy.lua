@@ -13,8 +13,8 @@ local init = function(self, config)
 
   self:add("transform", {x = 600, y = 400, width = 32, height = 32})
   self:add("canPress")
-  self:add("spriteRenderer", {position = self.position, texture = "enemy"})
-  self:add("rigidBody", {world = config, transform = self.transform})
+  self:add("spriteRenderer", {texture = "enemy"})
+  self:add("rigidBody", {entity = self, world = config})
 
   return self
 end

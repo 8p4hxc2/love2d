@@ -13,9 +13,9 @@ local init = function(self, config)
 
   self:add("tail")
   self:add("transform", {x = 0, y = 0, width = 32, height = 32})
-
-  self:add("spriteRenderer", {position = self.position, texture = "box"})
-  self:add("rigidBody", {world = config, transform = self.transform, userData = self})
+  self:add("spriteRenderer", {texture = "box"})
+  self:add("rigidBody", {entity = self, world = config})
+  self:add("rectangleCollision", {entity = self})
 
   return self
 end
