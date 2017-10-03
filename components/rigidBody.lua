@@ -5,11 +5,10 @@ local physics = love.physics
 local init = function(self, config)
   config = config or {}
 
-  -- define the properties of the component
-  if(not config.world) then
-    error("missing world for physic component")
-  end
+  -- check mandatory config
+  --assert(type(config.world) == 'table', 'missing world for physic component')
 
+  -- define the properties of the component
   self.body = physics.newBody(config.world, config.transform.x or 0, config.transform.y or 0, config.type or "dynamic")
 
   if(config.transform.width) then
@@ -25,11 +24,11 @@ local init = function(self, config)
 end
 
 -- expose the component
-local canDraw = {init = init}
+local dynamicBody = {init = init}
 
 -- constructor
 local new = function()
-  return setmetatable({}, {__index = canDraw})
+  return setmetatable({}, {__index = dynamicBody})
 end
 
 return {new = new}
