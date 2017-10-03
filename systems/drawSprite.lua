@@ -11,14 +11,14 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"canDraw", "transform"}
+  self.blueprint = {"spriteRenderer", "transform"}
   return self
 end
 
 -- draw all simple sprites
 local draw = function(self)
   for key, entity in pairs(self.entities) do
-    graphics.draw(cLoader.get(entity.canDraw.texture), entity.transform.x, entity.transform.y)
+    graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.transform.x, entity.transform.y)
   end
 end
 

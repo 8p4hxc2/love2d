@@ -11,7 +11,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"tail"}
+  self.blueprint = {"tail", "spriteRenderer"}
   return self
 end
 
@@ -19,7 +19,7 @@ end
 local draw = function(self)
   for key, entity in pairs(self.entities) do
     for i = 1, table.getn(entity.tail) do
-      graphics.draw(cLoader.get(entity.canDraw.texture), entity.tail[i].x, entity.tail[i].y)
+      graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.tail[i].x, entity.tail[i].y)
     end
   end
 end

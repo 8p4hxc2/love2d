@@ -10,7 +10,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {}
+  self.blueprint = {"rigidBody"}
   return self
 end
 
@@ -25,7 +25,7 @@ local update = function(self, dt)
   for key, entity in pairs(self.entities) do
     if entity.eated then
       entity.eated = false
-      entity.canPhysic.body:setPosition(random(500), random(500))
+      entity.rigidBody.body:setPosition(random(500), random(500))
     end
   end
 end

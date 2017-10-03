@@ -11,7 +11,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"tail"}
+  self.blueprint = {"tail", "transform", "rigidBody"}
   return self
 end
 
@@ -34,16 +34,16 @@ local update = function(self, dt)
   end
 
   for key, entity in pairs(self.entities) do
-    local angle = entity.canPhysic.body:getAngle();
-    entity.canPhysic.body:setAngularVelocity(angularVelocity * dt)
-    entity.canPhysic.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
+    local angle = entity.rigidBody.body:getAngle();
+    entity.rigidBody.body:setAngularVelocity(angularVelocity * dt)
+    entity.rigidBody.body:setLinearVelocity(math.cos(angle) * 200, math.sin(angle) * 200)
 
 
     if (#entity.path > 0) then
       table.remove(entity.path)
       local position = {}
-      position.x = entity.canPhysic.body:getX()
-      position.y = entity.canPhysic.body:getY()
+      position.x = entity.rigidBody.body:getX()
+      position.y = entity.rigidBody.body:getY()
       table.insert(entity.path, 1, position)
 
       for i = 1, #entity.tail do
@@ -52,8 +52,8 @@ local update = function(self, dt)
       end
     end
 
-    entity.transform.x = entity.canPhysic.body:getX()
-    entity.transform.y = entity.canPhysic.body:getY()
+    entity.transform.x = entity.rigidBody.body:getX()
+    entity.transform.y = entity.rigidBody.body:getY()
   end
 end
 

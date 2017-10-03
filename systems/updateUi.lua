@@ -10,7 +10,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"canPress", "canDraw"}
+  self.blueprint = {"canPress", "transform", "spriteRenderer"}
   return self
 end
 

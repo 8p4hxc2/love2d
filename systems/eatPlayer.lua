@@ -9,7 +9,7 @@ local cClass = require "core/class"
 -- init system
 local init = function(self)
   self.entities = {}
-  self.blueprint = {"tail"}
+  self.blueprint = {"tail", "rigidBody"}
   return self
 end
 
@@ -25,8 +25,8 @@ local update = function(self, dt)
     if entity.eating then
       entity.eating = false
       local position = {};
-      position.x = entity.canPhysic.body:getX()
-      position.y = entity.canPhysic.body:getY()
+      position.x = entity.rigidBody.body:getX()
+      position.y = entity.rigidBody.body:getY()
 
       table.insert(entity.tail, position)
 
