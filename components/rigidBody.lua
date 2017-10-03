@@ -5,20 +5,13 @@ local physics = love.physics
 local init = function(self, config)
   config = config or {}
 
+  local entity = config.entity
+
   -- check mandatory config
-  --assert(type(config.world) == 'table', 'missing world for physic component')
+  --assert((config.world == nil), 'missing world for rigidBody component')
 
   -- define the properties of the component
-  self.body = physics.newBody(config.world, config.transform.x or 0, config.transform.y or 0, config.type or "dynamic")
-
-  if(config.transform.width) then
-    self.shape = physics.newRectangleShape(config.transform.width, config.transform.height)
-    self.fixture = physics.newFixture(self.body, self.shape, 1)
-  end
-
-  if(config.userData) then
-    self.fixture:setUserData(config.userData)
-  end
+  self.body = physics.newBody(config.world, entity.transform.x or 0, entity.transform.y or 0, config.type or "dynamic")
 
   return self
 end
