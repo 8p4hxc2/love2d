@@ -3,6 +3,8 @@ local init = function(self, config)
   self.pressed = config.pressed or false -- is the entity pressed
   self.alreadyPressed = config.alreadyPressed or false -- has the entity already been pressed
   self.offsetV = config.offsetV or 4 -- offset to move the entity up/down
+  self.offTexture = config.offTexture
+  self.onTexture = config.onTexture
 
   return self
 end
