@@ -40,6 +40,7 @@ local init = function(self)
   self.systems:add("camera")
   self.systems:add("updateUi")
   self.systems:add("drawSprite")
+  self.systems:add("drawAnimatedSprite")
   self.systems:add("moveEnemy")
   self.systems:add("drawPlayer")
   self.systems:add("movePlayer")
@@ -54,7 +55,7 @@ local init = function(self)
   self.systems:registerEntity("player", self.world)
 
   -- init enemy
-  --self.systems:registerEntity("enemy", self.world)
+  self.systems:registerEntity("enemy", self.world)
 
   -- init food
   self.systems:registerEntity("food", self.world)

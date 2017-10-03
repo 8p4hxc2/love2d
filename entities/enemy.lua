@@ -3,6 +3,7 @@ local entity = require "base/entity"
 
 -- alias
 local physics = love.physics
+local graphics = love.graphics
 
 -- require
 local cClass = require "core/class"
@@ -11,9 +12,16 @@ local cClass = require "core/class"
 local init = function(self, config)
   self.enn = true
 
-  self:add("transform", {x = 600, y = 400, width = 32, height = 32})
+  self:add("transform", {x = 100, y = 300, width = 200, height = 200})
   self:add("canPress")
-  self:add("spriteRenderer", {texture = "enemy"})
+  --  self:add("spriteRenderer", {texture = "sorcererVillain"})
+
+  local frames = {}
+
+  for i = 1, 10 do
+    frames[#frames + 1] = graphics.newQuad((i - 1) * 200, 0, 200, 200, 2000, 200)
+  end
+  self:add("animatedSprite", {frames = frames})
   self:add("rigidBody", {entity = self, world = config})
 
   return self
