@@ -17,10 +17,11 @@ function love.load()
   physics.setMeter(64)
 
   -- enter game state
-  cState.switch("game")
+  --cState.switch("game")
 
   -- add ui state
-  cState.add("ui")
+  --cState.add("ui")
+  map = require("assets/darktober")
 end
 
 function love.update(dt)
@@ -29,5 +30,11 @@ end
 
 function love.draw()
   cState.draw()
-  graphics.print("Current FPS: " .. timer.getFPS( ), 10, 10)
+  graphics.print("Current FPS: " .. timer.getFPS(), 10, 10)
+
+  for x = 1, 10 do
+    for y = 1, 10 do
+      graphics.print("" .. map.tilesets[0].type, 10, 10)
+    end
+  end
 end
