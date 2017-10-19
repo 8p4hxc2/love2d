@@ -4,8 +4,6 @@ local system = require "base/system"
 -- alias
 local graphics = love.graphics
 
-local frame = 1;
-local frameDuration = 1
 -- require
 local cLoader = require "core/loader"
 local cClass = require "core/class"
@@ -17,26 +15,33 @@ local init = function(self)
   return self
 end
 
+-- update the system
+local update = function(self, dt)
+  for key, entity in pairs(self.entities) do
+    entity.animatedSprite.lastUpdate = entity.animatedSprite.lastUpdate + dt
+
+    if(entity.animatedSprite.lastUpdate > entity.animatedSprite.frameDuration) then
+      entity.animatedSprite.lastUpdate = 0
+      entity.animatedSprite.currentFrame = entity.animatedSprite.currentFrame + 1
+    end
+
+    if(entity.animatedSprite.currentFrame > 8) then
+      entity.animatedSprite.currentFrame = 1
+    end
+  end
+end
+
 -- draw all simple sprites
 local draw = function(self)
-  frameDuration = frameDuration + 1
-
-  if(frameDuration > 10) then
-    frameDuration = 1
-    frame = frame + 1
-  end
-
-  if(frame > 10) then
-    frame = 1
-  end
   for key, entity in pairs(self.entities) do
-    graphics.draw(cLoader.get("sorcererVillain"), entity.animatedSprite.frames[frame], entity.transform.x, entity.transform.y)
+    graphics.draw(cLoader.get("sorcererVillain"), entity.animatedSprite.frames[entity.animatedSprite.currentFrame], entity.transform.x, entity.transform.y)
   end
 end
 
 -- exposed methods
 local methods = {
   init = init,
+  update = update,
   draw = draw
 }
 
