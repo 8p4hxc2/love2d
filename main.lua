@@ -51,20 +51,20 @@ end
 
 function love.draw()
   cState.draw()
-  graphics.print("Current FPS: " .. timer.getFPS() .. map.layers[1].data[31] .. map.layers[1].data[31]-8, 10, 10)
+  graphics.print("Current FPS: " .. timer.getFPS(), 10, 10)
   graphics.translate(-cameraX, -cameraY)
   for x = 1, 10 do
     for y = 1, 10 do
       quad =
         love.graphics.newQuad(
-        (map.layers[1].data[x+(y-1)*10]-1) * 400,
+        (map.layers[1].data[x+(y-1)*10]-1) * map.tilesets[1].tilewidth,
         0,
-        400,
-        400,
-        3200,
-        800
+        map.tilesets[1].tilewidth,
+        map.tilesets[1].tileheight,
+        map.tilesets[1].imagewidth,
+        map.tilesets[1].imageheight
       )
-      graphics.draw(cLoader.get(map.tilesets[1].name), quad, x*400, y*400)
+      graphics.draw(cLoader.get(map.tilesets[1].name), quad, x*map.tilesets[1].tilewidth, y*map.tilesets[1].tileheight)
     end
   end
 end
