@@ -23,6 +23,12 @@ local loadFile = function(name, path)
   return get(name)
 end
 
+-- load a lua asset
+local loadLua = function(name, path)
+  assets[name] = filesystem.load(path)()
+  return get(name)
+end
+
 -- load an audio asset
 local loadAudio = function(name, path)
   assets[name] = audio.newSource(path)
@@ -52,6 +58,8 @@ local function getFiles(rootPath)
         loadAudio(assetKey, rootPath .."/".. value)
       elseif(extension == "ogv") then
         loadVideo(assetKey, rootPath .."/".. value)
+      elseif(extension == "lua") then
+        loadLua(assetKey, rootPath .."/".. value)
       else
         loadFile(assetKey, rootPath .."/".. value)
       end
