@@ -9,7 +9,7 @@ local keyboard = love.keyboard
 local audio = love.audio
 
 -- require core
-local cSystem = require("core/system")
+local cSystem = require "core/system"
 local cState = require "core/state"
 local cClass = require "core/class"
 local cLoader = require "core/loader"
@@ -37,27 +37,30 @@ local init = function(self)
   self.systems = cSystem.new():init()
 
   -- systems init
-  self.systems:add("camera")
-  self.systems:add("updateUi")
-  self.systems:add("drawSprite")
-  self.systems:add("moveEnemy")
-  self.systems:add("drawPlayer")
-  self.systems:add("movePlayer")
-  self.systems:add("eatFood")
-  self.systems:add("eatPlayer")
+  --self.systems:add("camera")
+  self.systems:add("drawMap")
+  --self.systems:add("updateUi")
+  --self.systems:add("drawSprite")
+  --self.systems:add("moveEnemy")
+  --self.systems:add("drawPlayer")
+  --self.systems:add("movePlayer")
+  --self.systems:add("eatFood")
+  --self.systems:add("eatPlayer")
 
   -- physics init
   self.world = physics.newWorld(0, 9.8, false)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
+  self.systems:registerEntity("level1")
+
   -- init snake
-  self.systems:registerEntity("player", self.world)
+  --self.systems:registerEntity("player", self.world)
 
   -- init enemy
   --self.systems:registerEntity("enemy", self.world)
 
   -- init food
-  self.systems:registerEntity("food", self.world)
+  --self.systems:registerEntity("food", self.world)
 end
 
 local destroy = function(self)
