@@ -9,8 +9,6 @@ local window = love.window
 -- core
 local cState = require "core/state"
 local cLoader = require "core/loader"
-local cameraX = 800
-local cameraY = 2800
 
 function love.load()
   -- init window properties
@@ -31,25 +29,12 @@ end
 
 function love.update(dt)
   cState.update(dt)
-  if keyboard.isDown("right") then
-    cameraX = cameraX + 10
-  end
-
-  if keyboard.isDown("left") then
-    cameraX = cameraX - 10
-  end
-
-  if keyboard.isDown("up") then
-    cameraY = cameraY - 10
-  end
-
-  if keyboard.isDown("down") then
-    cameraY = cameraY + 10
-  end
 end
 
 function love.draw()
-  graphics.print("Current FPS: " .. timer.getFPS(), 10, 10)
-  graphics.translate(-cameraX, - cameraY)
+  graphics.push()
   cState.draw()
+  graphics.pop()
+  -- show debug infos
+  graphics.print("Current FPS: " .. timer.getFPS(), 10, 10)
 end
