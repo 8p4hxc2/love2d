@@ -37,13 +37,16 @@ local init = function(self)
   self.systems = cSystem.new():init()
 
   -- systems init
-  --self.systems:add("camera")
+  self.systems:add("moveBodies")
+  self.systems:add("drawSprite")
+  self.systems:add("drawPlayer")
   self.systems:add("drawMap")
   --self.systems:add("updateUi")
-  --self.systems:add("drawSprite")
+
   --self.systems:add("moveEnemy")
-  --self.systems:add("drawPlayer")
-  --self.systems:add("movePlayer")
+
+  self.systems:add("movePlayer")
+  self.systems:add("camera")
   --self.systems:add("eatFood")
   --self.systems:add("eatPlayer")
 
@@ -52,9 +55,9 @@ local init = function(self)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
   self.systems:registerEntity("level1")
-
+  self.systems:registerEntity("food", self.world)
   -- init snake
-  --self.systems:registerEntity("player", self.world)
+  self.systems:registerEntity("player", self.world)
 
   -- init enemy
   --self.systems:registerEntity("enemy", self.world)
