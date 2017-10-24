@@ -17,7 +17,7 @@ end
 -- draw the system
 local draw = function(self)
   for key, entity in pairs(self.entities) do
-    --graphics.translate(-entity.body:getX() + 400, - entity.body:getY() + 300)
+    graphics.translate(-entity.transform.x + 400, - entity.transform.y + 300)
   end
 end
 
