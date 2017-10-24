@@ -51,9 +51,6 @@ local update = function(self, dt)
         entity.tail[i].y = entity.path[i * 6].y
       end
     end
-
-    entity.transform.x = entity.rigidBody.body:getX()
-    entity.transform.y = entity.rigidBody.body:getY()
   end
 end
 
