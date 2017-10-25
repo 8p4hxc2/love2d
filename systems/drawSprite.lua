@@ -18,7 +18,7 @@ end
 -- draw all simple sprites
 local draw = function(self)
   for key, entity in pairs(self.entities) do
-    graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.transform.x, entity.transform.y)
+    graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.transform.x, entity.transform.y, entity.transform.angle, 1, 1, entity.transform.width / 2, entity.transform.height / 2)
   end
 end
 
