@@ -11,6 +11,11 @@ local cLoader = require "core/loader"
 local init = function(self, config)
   -- adding components
   self:add("map", {properties = cLoader.get("darktober")})
+
+  self:add("transform", {x = 1000, y = 3200, width = 3000, height = 50})
+  self:add("rigidBody", {entity = self, world = config, type = "static"})
+  self:add("rectangleCollision", {entity = self})
+
   return self
 end
 
