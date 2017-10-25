@@ -7,6 +7,7 @@ local init = function(self, config)
   self.y = config.y or 0
   self.width = config.width or 0
   self.height = config.height or 0
+  self.angle = config.angle or 0
 
   return self
 end
