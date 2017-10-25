@@ -29,11 +29,14 @@ local handleKey = function()
 end
 
 local preSolve = function(a, b)
-  a:getUserData().eating = true
-  b:getUserData().eated = true
+  if(b:getUserData() and b:getUserData().spriteRenderer.texture == "box") then
+    b:getUserData().eating = true
+    a:getUserData().eated = true
+  end
 end
 
 local init = function(self)
+  print('lol')
   self.systems = cSystem.new():init()
 
   -- systems init
@@ -47,16 +50,16 @@ local init = function(self)
 
   self.systems:add("movePlayer")
   self.systems:add("camera")
-  --self.systems:add("eatFood")
-  --self.systems:add("eatPlayer")
+  self.systems:add("eatFood")
+  self.systems:add("eatPlayer")
 
   -- physics init
-  self.world = physics.newWorld(0, 9.81 * 64, true)
+  self.world = physics.newWorld(0, 9.81 * 32, true)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
   self.systems:registerEntity("level1", self.world)
 
-  for i = 1, 100 do
+  for i = 1, 800 do
     self.systems:registerEntity("food", self.world)
   end
 
