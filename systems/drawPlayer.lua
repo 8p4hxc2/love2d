@@ -19,7 +19,7 @@ end
 local draw = function(self)
   for key, entity in pairs(self.entities) do
     for i = 1, table.getn(entity.tail) do
-      graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.tail[i].x, entity.tail[i].y)
+      graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.tail[i].x, entity.tail[i].y, 0, 1, 1, 16, 16)
     end
   end
 end
