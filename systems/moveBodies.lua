@@ -24,6 +24,7 @@ local update = function(self, dt)
   for key, entity in pairs(self.entities) do
     entity.transform.x = entity.rigidBody.body:getX()
     entity.transform.y = entity.rigidBody.body:getY()
+    entity.transform.angle = entity.rigidBody.body:getAngle()
   end
 end
 
