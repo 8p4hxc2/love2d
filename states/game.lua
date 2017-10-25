@@ -51,11 +51,15 @@ local init = function(self)
   --self.systems:add("eatPlayer")
 
   -- physics init
-  self.world = physics.newWorld(0, 9.8, false)
+  self.world = physics.newWorld(0, 9.81 * 64, true)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
-  self.systems:registerEntity("level1")
-  self.systems:registerEntity("food", self.world)
+  self.systems:registerEntity("level1", self.world)
+
+  for i = 1, 100 do
+    self.systems:registerEntity("food", self.world)
+  end
+
   -- init snake
   self.systems:registerEntity("player", self.world)
 
