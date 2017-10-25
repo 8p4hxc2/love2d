@@ -12,13 +12,13 @@ local cLoader = require "core/loader"
 
 function love.load()
   -- init window properties
-  window.setMode(1280, 720)
+  window.setMode(1600, 1080)
 
   -- assets loading
   cLoader.getFiles("assets")
 
   -- global physics
-  physics.setMeter(64)
+  physics.setMeter(32)
 
   -- enter game state
   cState.switch("game")
