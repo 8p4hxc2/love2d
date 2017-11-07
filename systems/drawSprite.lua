@@ -18,7 +18,11 @@ end
 -- draw all simple sprites
 local draw = function(self)
   for key, entity in pairs(self.entities) do
-    graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.transform.x, entity.transform.y)
+    if(entity.quad) then
+      graphics.draw(cLoader.get("seasons_tiles"), entity.quad, entity.transform.x, entity.transform.y)
+    else
+      graphics.draw(cLoader.get(entity.spriteRenderer.texture), entity.transform.x, entity.transform.y)
+    end
   end
 end
 

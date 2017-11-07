@@ -12,7 +12,7 @@ local cClass = require("core/class")
 -- called one time at the creation of the state
 local init = function(self)
   self.systems = cSystem.new():init()
-  self.systems:add("updateUi")
+  self.systems:add("updateButton")
   self.systems:add("drawSprite")
 
   -- add button

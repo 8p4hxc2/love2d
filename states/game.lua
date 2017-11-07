@@ -50,6 +50,8 @@ local init = function(self)
   self.world = physics.newWorld(0, 9.8, false)
   self.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 
+  self.systems:registerEntity("tile", self.world)
+
   -- init snake
   self.systems:registerEntity("player", self.world)
 

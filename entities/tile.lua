@@ -2,19 +2,18 @@
 local entity = require "base/entity"
 
 -- alias
-local physics = love.physics
+local graphics = love.graphics
 
 -- require
 local cClass = require "core/class"
 
 -- init enemy
 local init = function(self, config)
-  self:add("path")
-  self:add("tail")
-  self:add("transform", {x = 0, y = 0, width = 32, height = 32})
+  -- adding components
+  self:add("transform", {x = 0, y = 0, width = 128, height = 64})
   self:add("spriteRenderer", {texture = "box"})
-  self:add("rigidBody", {entity = self, world = config})
-  self:add("rectangleCollision", {entity = self})
+  self.quad = graphics.newQuad(0, 0, 128, 64, 1024, 768)
+
   return self
 end
 
