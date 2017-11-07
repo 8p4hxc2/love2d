@@ -38,7 +38,6 @@ local init = function(self)
 
   -- systems init
   self.systems:add("camera")
-  self.systems:add("updateUi")
   self.systems:add("drawSprite")
   self.systems:add("drawAnimatedSprite")
   self.systems:add("moveEnemy")
